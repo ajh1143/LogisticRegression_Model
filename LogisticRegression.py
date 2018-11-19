@@ -42,7 +42,7 @@ class LogisticReg(object):
         # Generate true/false positive rates and threshold values
         false_pos, true_pos, thresholds = roc_curve(y_test, y_pred_prob)
         # Plot an ROC chart
-        plt.plot([0, 1], [0, 1], 'k--')
+        plt.plot([0, 1], [0, 1], 'kd--')
         plt.plot(false_pos, true_pos)
         plt.xlabel('False Positives')
         plt.ylabel('True Positives')
