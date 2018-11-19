@@ -1,9 +1,8 @@
 # Logistic Regression
 
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, confusion_matrix
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_curve
+from sklearn.metrics import classification_report, confusion_matrix, roc_curve, roc_auc_score
+from sklearn.model_selection import train_test_split, cross_val_score
 import matplotlib.pyplot as plt
 
 class LogisticReg(object):
@@ -48,3 +47,13 @@ class LogisticReg(object):
         plt.ylabel('True Positives')
         plt.title('{} vs {} ROC Curve'.format(feature, label))
         plt.show()
+
+    def auc_score(self, X_test, y_test, cross_val):
+        # Generate Predicted Probs
+        y_pred_prob = self.logi_reg.predict_proba(X_test)[:, 1]
+        # Generate AUC score
+        print("AUC: {}".format(roc_auc_score(y_test, y_pred_prob)))
+        # Generate cross-validated AUC scores
+        cross_val_auc = cross_val_score(self.logi_reg, self.X, self.y, cv=cross_val, scoring='roc_auc')
+        # Area under the curve scores
+        print("AUC scores computed using {}-fold cross-validation: {}".format(cross_val, cross_val_auc))
